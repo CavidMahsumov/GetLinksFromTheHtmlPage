@@ -23,6 +23,7 @@ namespace WpfApp1
     /// </summary>
     public partial class MainWindow : Window
     {
+        public string urlAddress { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -30,42 +31,38 @@ namespace WpfApp1
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            string urlAddress = AdressName.Text;
+             urlAddress = AdressName.Text;
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
+            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                Stream receiveStream = response.GetResponseStream();
+                StreamReader readStream = null;
+                if (String.IsNullOrWhiteSpace(response.CharacterSet))
+                    readStream = new StreamReader(receiveStream);
+                else
+                    readStream = new StreamReader(receiveStream,
 
-            //HttpWebRequest request = (HttpWebRequest)WebRequest.Create(urlAddress);
-            //HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                        Encoding.GetEncoding(response.CharacterSet));
 
-            //if (response.StatusCode == HttpStatusCode.OK)
-            //{
-            //    Stream receiveStream = response.GetResponseStream();
-            //    StreamReader readStream = null;
-            //    if (String.IsNullOrWhiteSpace(response.CharacterSet))
-            //        readStream = new StreamReader(receiveStream);
-            //    else
-            //        readStream = new StreamReader(receiveStream,
-            //            Encoding.GetEncoding(response.CharacterSet));
-            //    string data = readStream.ReadToEnd();
-            //    response.Close();
-            //    readStream.Close();
-
-            //    Console.WriteLine(data);
-
-
-            
+                string data = readStream.ReadToEnd();
                 var doc = new HtmlWeb().Load(urlAddress);
                 var linkTags = doc.DocumentNode.Descendants("link");
                 var linkedPages = doc.DocumentNode.Descendants("a")
                                                   .Select(a => a.GetAttributeValue("href", null))
                                                   .Where(u => !String.IsNullOrEmpty(u));
-
-
-
-
-
-            Main.ItemsSource = linkedPages;
-            
-           
-            
+                string[] arr = linkedPages.ToArray();
+                Adress.Header = AdressName.Text;
+                one.Header = arr[0];
+                two.Header = arr[1];
+                three.Header = arr[2];
+                four.Header = arr[3];
+                five.Header = arr[4];
+                six.Header = arr[5];
+                Seven.Header = arr[6];
+                response.Close();
+                readStream.Close();
+            }
         }
     }
 }

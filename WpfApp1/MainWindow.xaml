@@ -15,9 +15,27 @@
                 
             </Button>
 
-            <ListBox Name="Main">
-                
-            </ListBox>
+            <TreeView   Name="Main" Width="400">
+                <TreeViewItem Name="Adress"  >
+                    <TreeViewItem Name="one">
+                        <TreeViewItem Name="two" >
+                            <TreeViewItem Name="three" >
+                                <TreeViewItem Name="four">
+                                    <TreeViewItem Name="five">
+                                        
+                                    </TreeViewItem>
+
+                                </TreeViewItem>
+
+                            </TreeViewItem>
+
+                        </TreeViewItem>
+                    </TreeViewItem>
+                    
+                    <TreeViewItem Name="six"></TreeViewItem>
+                    <TreeViewItem Name="Seven"></TreeViewItem>
+                </TreeViewItem>
+            </TreeView>
         </StackPanel>
     </Grid>
 </Window>
